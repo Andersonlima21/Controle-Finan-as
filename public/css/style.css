@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.block {
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    width: 45%;
+}
+
+.item {
+    margin-bottom: 10px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+.saldo {
+    font-weight: bold;
+}
+
+.positivo {
+    color: green;
+}
+
+.negativo {
+    color: red;
+}
