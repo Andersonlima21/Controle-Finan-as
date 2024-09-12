@@ -1,0 +1,26 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+h1 {
+    color: #333;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.saldo {
+    font-weight: bold;
+}
+
+.positivo {
+    color: green;
+}
+
+.negativo {
+    color: red;
+}

@@ -5,63 +5,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle Financeiro</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Seu CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <h1>Controle Financeiro</h1>
-    <!-- Adicionar novo mês -->
-    <div class="item">
-        <label for="novoMes">Adicionar Novo Mês:</label>
-        <input type="text" id="novoMes" placeholder="Ex: 2024-10">
-        <button onclick="salvarMes()">Salvar Mês</button>
-    </div>
-    <!-- Seleção do mês -->
-    <div class="item">
-        <label for="mes">Selecione o Mês:</label>
-        <input type="text" id="mesSelecionado" placeholder="Ex: 2024-07">
-        <button onclick="carregarMes()">Carregar Mês</button>
-        <button onclick="location.reload()">Refresh</button>
-    </div>
-    <div class="container">
-        <div class="block">
-            <h2>Dia 30</h2>
-            <div class="item">
-                <label for="salario30">Salário Dia 30:</label>
-                <input type="number" id="salario30" value="0">
-            </div>
-            <h3>Adicionar Despesa</h3>
-            <div class="item">
-                <input type="text" id="nomeDespesa30" placeholder="Nome da Despesa">
-                <input type="number" id="valorDespesa30" placeholder="Valor">
-                <button onclick="adicionarDespesa('despesas30', 'salario30')">Adicionar Despesa</button>
-            </div>
-            <h3>Despesas</h3>
-            <div id="despesas30"></div>
-            <div class="item saldo">
-                Saldo: <span id="saldo30" class="positivo">R$ 0</span>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Controle Financeiro</h1>
+        
+        <!-- Adicionar novo mês -->
+        <div class="mb-4">
+            <label for="novoMes" class="form-label">Adicionar Novo Mês:</label>
+            <div class="input-group">
+                <input type="text" id="novoMes" class="form-control" placeholder="Ex: 2024-10">
+                <button class="btn btn-primary" onclick="salvarMes()">Salvar Mês</button>
             </div>
         </div>
-        <div class="block">
-            <h2>Dia 15</h2>
-            <div class="item">
-                <label for="salario15">Salário Dia 15:</label>
-                <input type="number" id="salario15" value="0">
+        
+        <!-- Seleção do mês -->
+        <div class="mb-4">
+            <label for="mes" class="form-label">Selecione o Mês:</label>
+            <div class="input-group">
+                <input type="text" id="mesSelecionado" class="form-control" placeholder="Ex: 2024-07">
+                <button class="btn btn-secondary" onclick="carregarMes()">Carregar Mês</button>
+                <button class="btn btn-danger" onclick="location.reload()">Refresh</button>
             </div>
-            <h3>Adicionar Despesa</h3>
-            <div class="item">
-                <input type="text" id="nomeDespesa15" placeholder="Nome da Despesa">
-                <input type="number" id="valorDespesa15" placeholder="Valor">
-                <button onclick="adicionarDespesa('despesas15', 'salario15')">Adicionar Despesa</button>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Dia 30</h2>
+                        <div class="mb-3">
+                            <label for="salario30" class="form-label">Salário Dia 30:</label>
+                            <input type="number" id="salario30" class="form-control" value="0">
+                        </div>
+                        <h3>Adicionar Despesa</h3>
+                        <div class="input-group mb-3">
+                            <input type="text" id="nomeDespesa30" class="form-control" placeholder="Nome da Despesa">
+                            <input type="number" id="valorDespesa30" class="form-control" placeholder="Valor">
+                            <button class="btn btn-success" onclick="adicionarDespesa('despesas30', 'salario30')">Adicionar Despesa</button>
+                        </div>
+                        <h3>Despesas</h3>
+                        <div id="despesas30"></div>
+                        <div class="mt-3">
+                            Saldo: <span id="saldo30" class="saldo positivo">R$ 0</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h3>Despesas</h3>
-            <div id="despesas15"></div>
-            <div class="item saldo">
-                Saldo: <span id="saldo15" class="positivo">R$ 0</span>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Dia 15</h2>
+                        <div class="mb-3">
+                            <label for="salario15" class="form-label">Salário Dia 15:</label>
+                            <input type="number" id="salario15" class="form-control" value="0">
+                        </div>
+                        <h3>Adicionar Despesa</h3>
+                        <div class="input-group mb-3">
+                            <input type="text" id="nomeDespesa15" class="form-control" placeholder="Nome da Despesa">
+                            <input type="number" id="valorDespesa15" class="form-control" placeholder="Valor">
+                            <button class="btn btn-success" onclick="adicionarDespesa('despesas15', 'salario15')">Adicionar Despesa</button>
+                        </div>
+                        <h3>Despesas</h3>
+                        <div id="despesas15"></div>
+                        <div class="mt-3">
+                            Saldo: <span id="saldo15" class="saldo positivo">R$ 0</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <script src="/js/script.js"></script>
+    
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Seu JavaScript -->
+    <script src="script.js"></script>
 </body>
 
 </html>
