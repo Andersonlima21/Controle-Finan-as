@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle Financeiro</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Seu CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,16 +15,23 @@
 <body>
     <div class="container mt-4">
         <h1 class="text-center mb-4">Controle Financeiro</h1>
-        
+
         <!-- Adicionar novo mês -->
         <div class="mb-4">
             <label for="novoMes" class="form-label">Adicionar Novo Mês:</label>
+
             <div class="input-group">
                 <input type="text" id="novoMes" class="form-control" placeholder="Ex: 2024-10">
                 <button class="btn btn-primary" onclick="salvarMes()">Salvar Mês</button>
             </div>
+
+            <small class="form-text text-muted">
+                Caso queira fazer uma atualização em um Mês já salvo, basta pesquisar ele, e alterar o que desejar.
+                Depois insira o nome exatamente igual neste campo e clique em salvar Mês. O arquivo JSON criado será
+                reescrito, salvando assim uma edição.
+            </small>
         </div>
-        
+
         <!-- Seleção do mês -->
         <div class="mb-4">
             <label for="mes" class="form-label">Selecione o Mês:</label>
@@ -33,7 +41,7 @@
                 <button class="btn btn-danger" onclick="location.reload()">Refresh</button>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-6 mb-4">
                 <div class="card">
@@ -47,7 +55,8 @@
                         <div class="input-group mb-3">
                             <input type="text" id="nomeDespesa30" class="form-control" placeholder="Nome da Despesa">
                             <input type="number" id="valorDespesa30" class="form-control" placeholder="Valor">
-                            <button class="btn btn-success" onclick="adicionarDespesa('despesas30', 'salario30')">Adicionar Despesa</button>
+                            <button class="btn btn-success"
+                                onclick="adicionarDespesa('despesas30', 'salario30')">Adicionar Despesa</button>
                         </div>
                         <h3>Despesas</h3>
                         <div id="despesas30"></div>
@@ -69,7 +78,8 @@
                         <div class="input-group mb-3">
                             <input type="text" id="nomeDespesa15" class="form-control" placeholder="Nome da Despesa">
                             <input type="number" id="valorDespesa15" class="form-control" placeholder="Valor">
-                            <button class="btn btn-success" onclick="adicionarDespesa('despesas15', 'salario15')">Adicionar Despesa</button>
+                            <button class="btn btn-success"
+                                onclick="adicionarDespesa('despesas15', 'salario15')">Adicionar Despesa</button>
                         </div>
                         <h3>Despesas</h3>
                         <div id="despesas15"></div>
@@ -81,9 +91,11 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <!-- Seu JavaScript -->
     <script src="script.js"></script>
 </body>

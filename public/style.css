@@ -24,3 +24,8 @@ h1 {
 .negativo {
     color: red;
 }
+
+.form-text {
+    font-style: italic;
+    font-size: 0.875rem;
+}
