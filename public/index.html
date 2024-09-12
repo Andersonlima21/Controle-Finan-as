@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle Financeiro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .block {
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            width: 45%;
+        }
+
+        .item {
+            margin-bottom: 10px;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        .saldo {
+            font-weight: bold;
+        }
+
+        .positivo {
+            color: green;
+        }
+
+        .negativo {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Controle Financeiro</h1>
+    <!-- Adicionar novo mês -->
+    <div class="item">
+        <label for="novoMes">Adicionar Novo Mês:</label>
+        <input type="text" id="novoMes" placeholder="Ex: 2024-10">
+        <button onclick="salvarMes()">Salvar Mês</button>
+    </div>
+    <!-- Seleção do mês -->
+    <div class="item">
+        <label for="mes">Selecione o Mês:</label>
+        <input type="text" id="mesSelecionado" placeholder="Ex: 2024-07">
+        <button onclick="carregarMes()">Carregar Mês</button>
+        <button onclick="location.reload()">Refresh</button>
+    </div>
+    <div class="container">
+        <div class="block">
+            <h2>Dia 30</h2>
+            <div class="item">
+                <label for="salario30">Salário Dia 30:</label>
+                <input type="number" id="salario30" value="0">
+            </div>
+            <h3>Adicionar Despesa</h3>
+            <div class="item">
+                <input type="text" id="nomeDespesa30" placeholder="Nome da Despesa">
+                <input type="number" id="valorDespesa30" placeholder="Valor">
+                <button onclick="adicionarDespesa('despesas30', 'salario30')">Adicionar Despesa</button>
+            </div>
+            <h3>Despesas</h3>
+            <div id="despesas30"></div>
+            <div class="item saldo">
+                Saldo: <span id="saldo30" class="positivo">R$ 0</span>
+            </div>
+        </div>
+        <div class="block">
+            <h2>Dia 15</h2>
+            <div class="item">
+                <label for="salario15">Salário Dia 15:</label>
+                <input type="number" id="salario15" value="0">
+            </div>
+            <h3>Adicionar Despesa</h3>
+            <div class="item">
+                <input type="text" id="nomeDespesa15" placeholder="Nome da Despesa">
+                <input type="number" id="valorDespesa15" placeholder="Valor">
+                <button onclick="adicionarDespesa('despesas15', 'salario15')">Adicionar Despesa</button>
+            </div>
+            <h3>Despesas</h3>
+            <div id="despesas15"></div>
+            <div class="item saldo">
+                Saldo: <span id="saldo15" class="positivo">R$ 0</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Objeto para armazenar valores das despesas
+        const despesasValues = {
+            despesas30: {},
+            despesas15: {}
+        };
+
+        // Função para atualizar saldo com base no salário preenchido
+        function atualizarSaldoInstantaneo(salarioId, despesasDivId) {
+            const salarioInput = document.getElementById(salarioId);
+            const saldoSpan = document.getElementById(`saldo${salarioId === 'salario30' ? '30' : '15'}`);
+
+            if (!salarioInput) return;
+
+            let saldo = parseFloat(salarioInput.value) || 0; // Caso o valor esteja vazio, considera como 0
+
+            const despesasDiv = document.getElementById(despesasDivId);
+            const checkboxes = despesasDiv.querySelectorAll('input[type="checkbox"]');
+
+            checkboxes.forEach(checkbox => {
+                const nomeDespesa = checkbox.id;
+                const valorDespesa = despesasValues[despesasDivId][nomeDespesa];
+                if (checkbox.checked) {
+                    saldo -= valorDespesa;
+                }
+            });
+
+            saldoSpan.textContent = `R$ ${saldo.toFixed(2)}`;
+            saldoSpan.className = saldo >= 0 ? 'positivo' : 'negativo';
+        }
+
+        // Adiciona o evento para atualizar saldo instantaneamente conforme o usuário digita o salário
+        document.getElementById('salario30').addEventListener('input', () => atualizarSaldoInstantaneo('salario30', 'despesas30'));
+        document.getElementById('salario15').addEventListener('input', () => atualizarSaldoInstantaneo('salario15', 'despesas15'));
+
+        function adicionarDespesa(despesasDivId, salarioId) {
+            const nomeDespesa = document.getElementById(`nomeDespesa${despesasDivId === 'despesas30' ? '30' : '15'}`).value;
+            const valorDespesa = parseFloat(document.getElementById(`valorDespesa${despesasDivId === 'despesas30' ? '30' : '15'}`).value);
+
+            if (!nomeDespesa || isNaN(valorDespesa) || valorDespesa <= 0) {
+                alert('Preencha todos os campos corretamente.');
+                return;
+            }
+
+            const despesasDiv = document.getElementById(despesasDivId);
+            const saldoSpan = document.getElementById(`saldo${despesasDivId === 'despesas30' ? '30' : '15'}`);
+
+            const despesaDiv = document.createElement('div');
+            despesaDiv.innerHTML = `
+                <div class="item">
+                    <input type="checkbox" id="${nomeDespesa}" onchange="atualizarSaldo('${salarioId}', '${despesasDivId}')">
+                    <label for="${nomeDespesa}">${nomeDespesa}: R$ ${valorDespesa.toFixed(2)}</label>
+                </div>
+            `;
+            despesasDiv.appendChild(despesaDiv);
+
+            // Armazena o valor da despesa
+            despesasValues[despesasDivId][nomeDespesa] = valorDespesa;
+        }
+
+        function atualizarSaldo(salarioId, despesasDivId) {
+
+            const salarioInput = document.getElementById(salarioId);
+            if (!salarioInput) {
+                console.error('Elemento de salário não encontrado');
+                return;
+            }
+
+            let saldo = parseFloat(salarioInput.value);
+
+
+            // Seleciona o contêiner de despesas correspondente
+            const despesasDiv = document.getElementById(despesasDivId);
+            if (!despesasDiv) {
+                console.error('Contêiner de despesas não encontrado');
+                return;
+            }
+
+            const checkboxes = despesasDiv.querySelectorAll('input[type="checkbox"]');
+            if (!checkboxes.length) {
+                console.error('Nenhum checkbox encontrado');
+                return;
+            }
+
+            // Recalcula o saldo com base no estado dos checkboxes
+            checkboxes.forEach(checkbox => {
+                const nomeDespesa = checkbox.id;
+                const valorDespesa = despesasValues[despesasDivId][nomeDespesa];
+
+                if (isNaN(valorDespesa)) {
+                    console.error('Valor da despesa inválido');
+                    return;
+                }
+
+                if (checkbox.checked) {
+                    saldo -= valorDespesa;
+                } else {
+                    saldo + valorDespesa;
+                }
+            });
+
+            // Atualiza a exibição do saldo
+            const saldoSpan = document.getElementById(`saldo${salarioId === 'salario30' ? '30' : '15'}`);
+            if (!saldoSpan) {
+                console.error('Elemento de saldo não encontrado');
+                return;
+            }
+
+            saldoSpan.textContent = `R$ ${saldo.toFixed(2)}`;
+            saldoSpan.className = saldo >= 0 ? 'positivo' : 'negativo';
+        }
+
+        // Função para salvar os dados do mês
+        async function salvarMes() {
+            const mes = document.getElementById('novoMes').value;
+            const salario30 = document.getElementById('salario30').value;
+            const salario15 = document.getElementById('salario15').value;
+
+            const despesas30 = Array.from(document.querySelectorAll('#despesas30 input[type="checkbox"]')).map(checkbox => ({
+                nome: checkbox.nextElementSibling.textContent.split(':')[0],
+                valor: parseFloat(checkbox.nextElementSibling.textContent.split('R$ ')[1]),
+                pago: checkbox.checked
+            }));
+
+            const despesas15 = Array.from(document.querySelectorAll('#despesas15 input[type="checkbox"]')).map(checkbox => ({
+                nome: checkbox.nextElementSibling.textContent.split(':')[0],
+                valor: parseFloat(checkbox.nextElementSibling.textContent.split('R$ ')[1]),
+                pago: checkbox.checked
+            }));
+
+            const mesData = {
+                mes: mes,
+                dia30: {
+                    salario: salario30,
+                    despesas: despesas30
+                },
+                dia15: {
+                    salario: salario15,
+                    despesas: despesas15
+                }
+            };
+
+            const response = await fetch('/salvarMes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(mesData)
+            });
+
+            if (response.ok) {
+                alert('Mês salvo com sucesso!');
+            } else {
+                alert('Erro ao salvar o mês.');
+            }
+        }
+
+        // Função para carregar os dados do mês
+        async function carregarMes() {
+            const mes = document.getElementById('mesSelecionado').value;
+
+            const response = await fetch(`/carregarMes/${mes}`);
+            if (response.ok) {
+                const mesData = await response.json();
+                document.getElementById('salario30').value = mesData.dia30.salario;
+                document.getElementById('salario15').value = mesData.dia15.salario;
+
+                const despesas30 = mesData.dia30.despesas;
+                const despesas15 = mesData.dia15.despesas;
+
+                const despesasDiv30 = document.getElementById('despesas30');
+                despesasDiv30.innerHTML = '';
+                despesas30.forEach(despesa => {
+                    despesasDiv30.innerHTML += `
+                        <div class="item">
+                            <input type="checkbox" id="${despesa.nome}" ${despesa.pago ? 'checked' : ''} onchange="atualizarSaldo('salario30', 'despesas30')">
+                            <label for="${despesa.nome}">${despesa.nome}: R$ ${despesa.valor.toFixed(2)}</label>
+                        </div>
+                    `;
+                    // Armazena o valor da despesa
+                    despesasValues.despesas30[despesa.nome] = despesa.valor;
+                });
+
+                const despesasDiv15 = document.getElementById('despesas15');
+                despesasDiv15.innerHTML = '';
+                despesas15.forEach(despesa => {
+                    despesasDiv15.innerHTML += `
+                        <div class="item">
+                            <input type="checkbox" id="${despesa.nome}" ${despesa.pago ? 'checked' : ''} onchange="atualizarSaldo('salario15', 'despesas15')">
+                            <label for="${despesa.nome}">${despesa.nome}: R$ ${despesa.valor.toFixed(2)}</label>
+                        </div>
+                    `;
+                    // Armazena o valor da despesa
+                    despesasValues.despesas15[despesa.nome] = despesa.valor;
+                });
+
+                atualizarSaldo('salario30', 'despesas30');
+                atualizarSaldo('salario15', 'despesas15');
+            } else {
+                alert('Erro ao carregar os dados do mês.');
+            }
+        }
+    </script>
+</body>
+
+</html>
